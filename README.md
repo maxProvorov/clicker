@@ -59,3 +59,60 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+# URL Shortener API
+
+## Setup
+
+```bash
+composer install
+cp .env.example .env
+php artisan key:generate
+php artisan migrate
+php artisan serve
+```
+
+## API Endpoints
+
+### Create Short Link
+
+`POST /api/shorten`
+```json
+{
+  "url": "https://example.com"
+}
+```
+Response:
+```json
+{
+  "short_url": "http://localhost/abc123",
+  "code": "abc123"
+}
+```
+
+### Redirect
+
+`GET /{code}`
+
+### Statistics (Protected)
+
+`GET /api/statistics/{code}`  
+Header: `Authorization: Bearer {token}`
+
+Response:
+```json
+{
+  "created_at": "2024-06-01T12:00:00Z",
+  "clicks_count": 5
+}
+```
+
+## Rate Limiting
+
+120 requests per minute per IP.
+
+## Testing
+
+```bash
+php artisan test
+```
